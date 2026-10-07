@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quem é o Assasino nessa Empresa?</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="case">
+    <header>
+      <div>
+        <h1>Quem é o Assasino nessa Empresa?</h1>
+        <small>RECONSTITUIÇÃO ATIVA | INVESTIGADOR: VOCÊ</small>
+      </div>
+      <span class="tag">CONFIDENCIAL</span>
+    </header>
+
+    <div class="progress" aria-label="Progresso das etapas">
+      <i class="dot active"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i>
+    </div>
+
+    <section id="intro" class="screen active">
+      <h2>ANTES DE COMEÇAR</h2>
+      <div class="brief"><strong>Um informante foi encontrado morto.</strong> Ele deixou mensagens, registros de sistema e acessos ao prédio. Sua equipe deve investigar, analisar informações e conectar evidências para descobrir <strong>quem cometeu o crime</strong>.</div>
+      <p>Este escape room foi desenvolvido por estudantes de <strong>Análise e Desenvolvimento de Sistemas</strong>. As pistas usam ideias dessa área, mas foram preparadas para que qualquer pessoa curiosa consiga resolvê-las.</p>
+      <h3>COMO FUNCIONA?</h3>
+      <ul>
+        <li>O jogo tem <strong>5 etapas</strong>, todas neste mesmo computador.</li>
+        <li>Para avançar, resolva o desafio atual.</li>
+        <li>Cada solução desbloqueia a próxima evidência.</li>
+      </ul>
+      <div class="actions">
+        <button class="main" onclick="startInvestigation()">INICIAR INVESTIGAÇÃO</button>
+      </div>
+    </section>
+
+    <section id="stage1" class="screen">
+      <h2>ETAPA 1 — MENSAGEM FRAGMENTADA</h2>
+      <div class="brief">Clique nas palavras para movê-las. Reconstitua a última frase do informante na ordem correta.</div>
+      <span class="label">Fragmentos de evidências</span>
+      <div id="bank" class="area"></div>
+      <span class="label">Mensagem reconstituída</span>
+      <div id="rebuild" class="area"></div>
+      <div class="actions">
+        <button class="main" onclick="checkPhrase()">DESCRIPTOGRAFAR MENSAGEM</button>
+        <button class="secondary" onclick="resetPhrase()">RECOMEÇAR</button>
+      </div>
+      <div id="phraseFeedback" class="feedback">
+        ✔ Mensagem decifrada. O encontro seria no <span class="key">SERVIDOR</span>, às <span class="key">22H</span>.
+        <p>Investigador, pronto para a próxima pista?</p>
+        <div class="actions">
+          <button class="main" onclick="go(2)">ACESSAR ETAPA 2</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="stage2" class="screen">
+      <h2>ETAPA 2 — O COFRE DE PILHA</h2>
+      <div class="help"><strong>O que é uma pilha?</strong><br>Imagine uma pilha de pratos: tudo acontece pelo topo.<br>Mas aqui vamos usar uma pilha de <strong>letras</strong>.<br> <strong>- push</strong> coloca uma letra no topo; <br> <strong>- pop</strong> retira a letra do topo; <br> <strong>- top</strong> confere a letra que está no topo sem removê-la.</div>
+      <p>O cofre precisa que você revele uma <strong>Palavra Secreta</strong> para receber uma nova pista. Os comandos foram embaralhados: descubra a ordem que forma a palavra. Depois, use <strong>TOP</strong> para confirmar a resposta.</p>
+      <div class="machine">
+        <div>
+          <span class="label">Pilha (base embaixo)</span>
+          <div id="stackView" class="view"><small>vazia</small></div>
+        </div>
+        <div>
+          <span class="label">Comandos embaralhados</span>
+          <div id="stackCmds" class="cmds"></div>
+          <div id="stackLog" class="log">Monte a palavra e use TOP para confirmar.</div>
+          <div class="actions">
+            <button class="secondary" onclick="resetStack()">LIMPAR PILHA</button>
+          </div>
+        </div>
+      </div>
+      <div id="stackFeedback" class="feedback">
+        ✔ Palavra revelada: <span class="key">PISTA</span>.
+        <p>Uma anotação aparece no cofre: “A chave seguinte deve ser lida pelas duas pontas.”</p>
+        <div class="actions">
+          <button class="main" onclick="go(3)">ACESSAR ETAPA 3</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="stage3" class="screen">
+      <h2>ETAPA 3 — O CÓDIGO DA DEQUE</h2>
+      <div class="help">
+        <strong>O que é uma deque?</strong><br>
+        Imagine uma fila com duas entradas: é possível trabalhar tanto pelo começo quanto pelo fim.<br>
+        Mas aqui vamos usar uma deque de <strong>letras</strong>.<br>
+        <strong>- addFront</strong> coloca uma letra na frente;<br>
+        <strong>- addBack</strong> coloca uma letra no fim;<br>
+        <strong>- removeFront</strong> retira a primeira letra;<br>
+        <strong>- removeBack</strong> retira a última letra.
+      </div>
+      <p>A etiqueta recuperada informa que a próxima evidência está no <strong>BLOCO C</strong>. Cada comando trabalha com apenas uma letra e permanece disponível para novas tentativas. Monte o código da frente para o fim e confirme sua resposta.</p>
+      <div class="machine">
+        <div>
+          <span class="label">Frente ← deque → fim</span>
+          <div id="dequeView" class="view deque"><small>vazia</small></div>
+        </div>
+        <div>
+          <span class="label">Comandos embaralhados</span>
+          <div id="dequeCmds" class="cmds"></div>
+          <div id="dequeLog" class="log">Forme BLOCO C e depois confirme o código.</div>
+          <div class="actions">
+            <button class="secondary" onclick="resetDeque()">LIMPAR DEQUE</button>
+            <button class="main" onclick="checkDeque()">CONFIRMAR CÓDIGO</button>
+          </div>
+        </div>
+      </div>
+      <div id="dequeFeedback" class="feedback">
+        ✔ Código recuperado: <span class="key">BLOCO C</span>.
+        <p>Os registros do prédio foram liberados. Agora é hora de comparar as informações.</p>
+        <div class="actions">
+          <button class="main" onclick="go(4)">ACESSAR ETAPA 4</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="stage4" class="screen">
+      <h2>ETAPA 4 — CRUZAMENTO DE ÁLIBIS</h2>
+      <div class="brief">A primeira pista indicava o <strong>Servidor às 22h00</strong> — e foi lá que a morte ocorreu. Os dados abaixo mostram onde cada pessoa deveria estar. Dois relatos, porém, ainda deixam dúvidas.</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Pessoa</th>
+            <th>Registro / álibi</th>
+            <th>O que sabemos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Karinne</td><td>Cartão registra o banheiro, 21h55–22h08</td><td>Câmera do corredor confirma.</td></tr>
+          <tr><td>Leticia</td><td>Cartão registra o Bloco B, 21h54–22h06</td><td>Não seria possível estar no Bloco B e no C ao mesmo tempo.</td></tr>
+          <tr><td>Gabrielly</td><td>Cafeteria, 21h56–22h07</td><td>Cafeteria estava aberta nesse horário.</td></tr>
+          <tr><td>Erick</td><td>Cartão aponta Bloco C, 21h50–22h04</td><td>Nenhuma câmera o mostra entrando no Bloco C.</td></tr>
+          <tr><td>Maria</td><td>Diz que estava na sala de reuniões</td><td>Não há reuniões nesse horário.</td></tr>
+        </tbody>
+      </table>
+      <div class="help"><strong>Investigador, qual seria a sua conclusão provisória?</strong><br>Selecione a opção que você considera verdadeira.</div>
+      <div class="choices">
+        <button class="choice" onclick="selectConclusion('outside', this)">Karinne e Leticia estão fora da investigação.</button>
+        <button class="choice" onclick="selectConclusion('card', this)">O cartão de Erick no Bloco C pode ter sido adulterado.</button>
+        <button class="choice" onclick="selectConclusion('maria', this)">Maria pode ter esquecido algo importante na sala de reuniões.</button>
+      </div>
+      <div class="actions">
+        <button class="main" onclick="confirmConclusion()">CONFIRMAR CONCLUSÃO</button>
+      </div>
+      <div id="conclusionFeedback" class="feedback" aria-live="polite"></div>
+    </section>
+
+    <section id="stage5" class="screen">
+      <h2>ETAPA 5 — A EVIDÊNCIA FINAL</h2>
+      <div class="brief">A perícia recuperou um log apagado: às <strong>21h58</strong>, o computador da sala de reuniões alterou o registro ER-17, o cartão de Erick, para fazê-lo parecer no Bloco C.</div>
+      <div class="help"><strong>Lembre-se:</strong><br>1. Erick não apareceu nas câmeras do Bloco C, portanto o cartão dele foi usado para incriminá-lo.<br>2. O crime ocorreu na sala dos servidores às 22h.<br>3. A sala dos servidores fica no Bloco C.<br><br>Quem criou um álibi falso e teve a oportunidade de alterar o registro?</div>
+      <p>Com base em todas as evidências, quem deve ser acusado pelo assassinato no Servidor?</p>
+      <div class="choices"><button class="choice" onclick="finalAccuse('Karinne')">Acusar Karinne</button><button class="choice" onclick="finalAccuse('Leticia')">Acusar Leticia</button><button class="choice" onclick="finalAccuse('Erick')">Acusar Erick</button><button class="choice" onclick="finalAccuse('Gabrielly')">Acusar Gabrielly</button><button class="choice" onclick="finalAccuse('Maria')">Acusar Maria</button></div>
+      <div id="finalFeedback" class="feedback"></div>
+    </section>
+  </main>
+
+  <section id="investigatorIntro" class="investigator-intro" aria-live="polite"><div class="investigator-card"><div class="magnifier">⌕</div><p>ARQUIVO LIBERADO</p><h2>VOCÊ AGORA É O INVESTIGADOR</h2></div></section>
+  <section id="ending" class="end"><i class="blood b1"></i><i class="blood b2"></i><i class="blood b3"></i><i class="blood b4"></i><div class="verdict"><small>ARQUIVO CR-2247</small><h2>CASO ENCERRADO</h2><div class="killer">A ASSASSINA ERA MARIA</div><p>O perfil administrativo usado para adulterar o cartão de Erick e o falso álibi confirmaram a acusação.<br>Investigação concluída.</p></div></section>
+  <section id="wrongEnding" class="wrong-ending"><div class="wrong-card"><div class="warning-mark">!</div><small>ACUSAÇÃO INCORRETA</small><h2>O ASSASSINO AINDA ESTÁ LIVRE</h2><p>A evidência não sustenta essa acusação. Revise o caso e tente novamente.</p><button class="secondary" onclick="location.reload()">JOGUE NOVAMENTE</button></div></section>
+  <script src="game.js"></script>
+</body>
+</html>
